@@ -14,12 +14,20 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+import fc.Application.MVC.Controllers.DetailsCommandeController;
 import fc.Application.MVC.Controllers.EditClientController;
 import fc.Application.MVC.Controllers.EditMovieController;
 import fc.Application.MVC.Controllers.ListClientController;
 import fc.Application.MVC.Controllers.ListOrdersController;
 import fc.Application.MVC.Controllers.UpdateMovieController;
+import fc.Application.MVC.ViewModels.ClientOrdersViewModel;
 import fc.Application.MVC.ViewModels.ClientViewModel;
+import fc.Application.MVC.ViewModels.OrderViewModel;
+
+import fc.Application.MVC.Controllers.ListOrdersController;
+import fc.Application.MVC.Controllers.UpdateMovieController;
+import fc.Application.MVC.ViewModels.ClientViewModel;
+import fc.Application.MVC.ViewModels.OrderViewModel;
 
 
 public class ListClientView extends Dialog
@@ -31,14 +39,14 @@ public class ListClientView extends Dialog
 	
 	public RunController m_Infrastructure;
 	
-	protected ClientViewModel[] getViewModel()
+	protected ClientViewModel[] getClientViewModel()	
 	{
 		if (m_Infrastructure != null)
 			return (ClientViewModel[])m_Infrastructure.m_ViewModel;
 		else
 			return new ClientViewModel[0];
 	}
-	
+
 	/**
 	 * Create the dialog.
 	 * @param parent
@@ -71,6 +79,7 @@ public class ListClientView extends Dialog
 	 */
 	private void createContents() {
 
+
 		shlListe = new Shell(getParent(), getStyle());
 		shlListe.setSize(750, 600);
 		shlListe.setText("NORTHWIND PROJET L3");
@@ -101,6 +110,7 @@ public class ListClientView extends Dialog
 		table.setBounds(50, 100, 650, 400);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
+
 		
 		TableColumn tcNum = new TableColumn(table, SWT.NONE);
 		tcNum.setWidth(150);
@@ -119,13 +129,13 @@ public class ListClientView extends Dialog
 		tcTotal.setText("Montant Total");
 		
 
-		ClientViewModel[] Clients = getViewModel();
+		
+		ClientViewModel[] Clients = getClientViewModel();
 		
 		for (ClientViewModel Client : Clients)
 		{
 		    menu.add(""+Client.m_LastName+"  "+ Client.m_FirstName );
 		}
-
 
 	
 
@@ -136,7 +146,7 @@ public class ListClientView extends Dialog
 				String[] NomPrenom = element.split("  ");
 				String LastName = NomPrenom[0];
 				String FirstName = NomPrenom[1];
-
+				
 				m_Infrastructure.runController(shlListe, ListOrdersController.class, LastName,FirstName);
 			}
 		});
@@ -147,9 +157,22 @@ public class ListClientView extends Dialog
 			public void widgetSelected(SelectionEvent e) {
 				String element = menu.getText();
 				String[] NomPrenom = element.split("  ");
-				String LastName = NomPrenom[0];
-				String FirstName = NomPrenom[1];
+				String LastName = "hello";
+				String FirstName = "NomPrenom[1]";
 				m_Infrastructure.runController(shlListe, EditClientController.class, LastName, FirstName);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				throw new UnsupportedOperationException("Unimplemented method 'widgetDefaultSelected'");
+			}
+		});
+
+		commandes.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				m_Infrastructure.runController(shlListe, DetailsCommandeController.class, 152);
 			}
 
 			@Override

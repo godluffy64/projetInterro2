@@ -20,8 +20,7 @@ public class EditClientController extends Controller
 		Client Client = m_Model.m_ClientEditer;
 		
 		ClientViewModel clientViewModel = new ClientViewModel(Client.m_FirstName, Client.m_LastName); // (movie.m_Id, movie.m_Title, movie.m_Year);		 
-
-
+		
 		return View(clientViewModel);
 	}   
 }

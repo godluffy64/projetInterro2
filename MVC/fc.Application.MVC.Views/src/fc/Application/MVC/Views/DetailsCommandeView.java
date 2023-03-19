@@ -14,36 +14,37 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-import fc.Application.MVC.Controllers.EditMovieController;
 import fc.Application.MVC.Controllers.ListClientController;
 import fc.Application.MVC.Controllers.ListOrdersController;
 import fc.Application.MVC.Controllers.UpdateMovieController;
 import fc.Application.MVC.ViewModels.ClientViewModel;
+import fc.Application.MVC.ViewModels.OrderViewModel;
+import fc.Application.MVC.Views.RunController;
 
-public class EditClientView extends Dialog
+public class DetailsCommandeView extends Dialog
 {
-
-	protected Object result;
+    protected Object result;
 	protected Shell shlListe;
 	private Table table;
-    private Table table2;
 	
 	public RunController m_Infrastructure;
 	
-	protected ClientViewModel[] getViewModel()
+	
+	protected OrderViewModel[] getOrderViewModel()
 	{
 		if (m_Infrastructure != null)
-			return (ClientViewModel[])m_Infrastructure.m_ViewModel;
+			return (OrderViewModel[])m_Infrastructure.m_ViewModel;
 		else
-			return new ClientViewModel[0];
+			return new OrderViewModel[0];
 	}
+
 	
 	/**
 	 * Create the dialog.
 	 * @param parent
 	 * @param style
 	 */
-	public EditClientView(Shell parent, int style) {
+	public DetailsCommandeView(Shell parent, int style) {
 		super(parent, style);
 		setText("SWT Dialog");
 	}
@@ -65,51 +66,41 @@ public class EditClientView extends Dialog
 		return result;
 	}
 
-	/**
-	 * Create contents of the dialog.
-	 */
-	private void createContents() {
+
+
+    private void createContents() {
 
 		shlListe = new Shell(getParent(), getStyle());
-		shlListe.setSize(450, 400);
-		shlListe.setText("Détails du client");
+		shlListe.setSize(750, 600);
+		shlListe.setText("Détails de la commande ");
 		
 		// LIST VIEW
-		  
+
 
 		table = new Table(shlListe, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(150, 30, 200, 25);
-
-
-		table2 = new Table(shlListe, SWT.BORDER | SWT.FULL_SELECTION);
-		table2.setBounds(150, 70, 200, 25);
-
-		Label lblNom = new Label(shlListe, SWT.NONE);
-		lblNom.setBounds(20,30,60,20);
-		lblNom.setText("Nom");
-
-		Label lblPrenom = new Label(shlListe, SWT.NONE);
-		lblPrenom.setBounds(20,70,60,20);
-		lblPrenom.setText("Prenom");
+		table.setBounds(25, 40, 700, 475);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
 		
 		TableColumn tcProduit = new TableColumn(table, SWT.NONE);
 		tcProduit.setWidth(150);
 		tcProduit.setText("Produit");
-
-
-
-		TableItem itemFirstName = new TableItem(table, SWT.NONE);
-		itemFirstName.setText("client.m_FirstName");
-
-		TableItem itemLastName = new TableItem(table2, SWT.NONE);
-		itemLastName.setText("client.m_LastName");
 		
+		TableColumn tcQuantite = new TableColumn(table, SWT.NONE);
+		tcQuantite.setWidth(150);
+		tcQuantite.setText("Quantite");
+
+		TableColumn tcPrix = new TableColumn(table, SWT.NONE);
+		tcPrix.setWidth(150);
+		tcPrix.setText("Prix unitaire");
+
+		TableColumn tcDiscount = new TableColumn(table, SWT.NONE);
+		tcDiscount.setWidth(150);
+		tcDiscount.setText("Discount");
 
 		Button btnRevenir = new Button(shlListe, SWT.NONE);
-		btnRevenir.setBounds(275, 300, 150, 30);
-		btnRevenir.setText("Liste des clients");	
-		
-		
+		btnRevenir.setBounds(625, 520, 100, 30);
+		btnRevenir.setText("Revenir");
 		btnRevenir.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -122,5 +113,9 @@ public class EditClientView extends Dialog
 				throw new UnsupportedOperationException("Unimplemented method 'widgetDefaultSelected'");
 			}
 		});
-	}
+
+		// COMMANDE CONTIENT LISTE COMMANDE DU CLIENT
+
+		// MOVIE VIEW MODEL EST ICI FAUT MODIFIER CA POUR VOIR LA BASE DE DONNEE
+    }
 }

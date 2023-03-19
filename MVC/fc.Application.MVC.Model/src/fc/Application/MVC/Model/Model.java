@@ -65,7 +65,6 @@ public class Model
         }
     }
 
-    
 	public static Model getClient(){
 
         // A décommenter afin de recréer la base de donnée.
@@ -105,9 +104,6 @@ public class Model
             m.m_Clients = listeClient;
 
             s_ModelClient = m;
-
-
-
             
             prep.close();
         }
